@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { fetchUsers } from "../services/user";
+import UserCard from "./UserCard";
 
-function UserList() {
+const UserList = () => {
   const [users, setUsers] = useState([]);
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
@@ -11,7 +12,11 @@ function UserList() {
     const fetchNewUsers = async () => {
       setIsLoading(true);
       const newUsers = await fetchUsers(page, 20);
-      setUsers((prevUsers) => [...prevUsers, ...newUsers]);
+      if (page === 1) {
+        setUsers(newUsers);
+      } else {
+        setUsers((prevUsers) => [...prevUsers, ...newUsers]);
+      }
 
       setTimeout(() => {
         setIsLoading(false);
@@ -35,29 +40,23 @@ function UserList() {
   }, [isLoading]);
 
   return (
-    <div className="grid grid-cols-4 gap-4">
-      {users.map((user, index) => (
-        <div key={index} className="border ">
-          <img
-            src={user.imageUrl}
-            alt={user.name}
-            className="w-full h-64 object-cover"
-          />
-          <div>
-            <h3>
-              {user.name} {user.lastName}
-            </h3>
-            <p>
-              {user.prefix} {user.title}
-            </p>
-          </div>
-        </div>
-      ))}
+    <div className="container mx-auto max-w-7xl p-2">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        {users.map((user, index) => (
+          <UserCard key={index} user={user} />
+        ))}
+      </div>
       <div ref={loaderRef} className="text-center">
-        {isLoading && <p>Loading...</p>}
+        {isLoading && (
+          <div className="loader-container mx-auto">
+            <div className="loader-bar loader-bar-1"></div>
+            <div className="loader-bar loader-bar-2"></div>
+            <div className="loader-bar loader-bar-3"></div>
+          </div>
+        )}
       </div>
     </div>
   );
-}
+};
 
 export default UserList;
