@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import useIntersectionObserver from "../hooks/useIntersectionObserver";
 import Loading from "./Loading";
 
-const UserList = () => {
+const UserList = ({ addToVisitedLinks }) => {
   const [users, setUsers] = useState([]);
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
@@ -41,7 +41,16 @@ const UserList = () => {
     <div className="container mx-auto max-w-7xl p-2">
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {users.map((user, index) => (
-          <Link to={`/user/${user.id}`} key={index}>
+          <Link
+            to={`/user/${user.id}`}
+            key={index}
+            onClick={() =>
+              addToVisitedLinks(
+                `${user.prefix} ${user.name} ${user.lastName}`,
+                `/user/${user.id}`
+              )
+            }
+          >
             <UserCard user={user} />
           </Link>
         ))}

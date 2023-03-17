@@ -1,26 +1,27 @@
 const AddressDetails = ({ user }) => {
   return (
-    <fieldset className="w-1/3 p-4 border border-gray-500">
-      <legend className="text-lg font-medium mb-4">Address</legend>
-      <div className="mb-2">
+    <fieldset className="block border-2 border-gray-600 p-2 lg:ml-2 w-full lg:w-auto py-1">
+      <legend className="block px-2 border-0 text-lg">Address</legend>
+      <div>
         <strong>
           {user.company.name} {user.company.suffix}
         </strong>
       </div>
-      <div className="mb-2">
-        <span>City</span>: {user.address.city}
+      <div>
+        <span className="underline">City</span>: {user.address.city}
       </div>
-      <div className="mb-2">
-        <span>Country</span>: {user.address.country}
+      <div>
+        <span className="underline">Country</span>: {user.address.country}
       </div>
-      <div className="mb-2">
-        <span>State</span>: {user.address.state}
+      <div>
+        <span className="underline">State</span>: {user.address.state}
       </div>
-      <div className="mb-2">
-        <span>Street Address</span>: {user.address.streetAddress}
+      <div>
+        <span className="underline">Street Address</span>:{" "}
+        {user.address.streetAddress}
       </div>
-      <div className="mb-2">
-        <span>ZIP</span>: {user.address.zipCode}
+      <div>
+        <span className="underline">ZIP</span>: {user.address.zipCode}
       </div>
     </fieldset>
   );

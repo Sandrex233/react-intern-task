@@ -4,19 +4,19 @@ import AddressDetails from "./AddressDetails";
 
 const Header = ({ user }) => {
   return (
-    <div className="p-4 flex flex-col md:flex-row items-center">
+    <>
       {user && (
-        <div className="flex flex-col md:flex-row justify-between flex-grow">
+        <div className="flex justify-between lg:flex-row flex-col items-center p-5">
           <img
-            src={user.imageUrl}
-            alt={`${user.prefix} ${user.name} ${user.lastName}`}
-            className="w-full md:w-24 h-24 mr-8"
+            src={`${user.imageUrl}?v=${user.id}`}
+            alt={user.name}
+            className="h-52 w-full lg:w-auto"
           />
           <UserInformation user={user} />
           <AddressDetails user={user} />
         </div>
       )}
-    </div>
+    </>
   );
 };
 

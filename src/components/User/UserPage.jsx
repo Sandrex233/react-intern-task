@@ -7,7 +7,7 @@ import useIntersectionObserver from "../../hooks/useIntersectionObserver";
 import UserCard from "../UserCard";
 import Loading from "../Loading";
 
-const UserPage = () => {
+const UserPage = ({ addToVisitedLinks, visitedLinks }) => {
   const { userId } = useParams();
   const [user, setUser] = useState(null);
   const [friends, setFriends] = useState([]);
@@ -16,12 +16,6 @@ const UserPage = () => {
   const loaderRef = useRef(null);
 
   const isIntersecting = useIntersectionObserver(loaderRef, { threshold: 1 });
-
-  const addToVisitedLinks = (name, link) => {
-    const visitedLinks = JSON.parse(localStorage.getItem("visitedLinks")) || [];
-    visitedLinks.push({ name, link });
-    localStorage.setItem("visitedLinks", JSON.stringify(visitedLinks));
-  };
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -57,10 +51,10 @@ const UserPage = () => {
   }, [isIntersecting, isLoading]);
 
   return (
-    <div className="container mx-auto max-w-6xl p-2 border-x border-gray-300">
+    <div className="container mx-auto max-w-6xl p-2 py-0 border-x border-gray-300">
       {user && <Header user={user} />}
-      <VisitedLinks />
-      <h2 className="font-bold text-2xl">Friends:</h2>
+      <VisitedLinks visitedLinks={visitedLinks} />
+      <h2 className="font-bold text-2xl mb-8">Friends:</h2>
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {friends.map((friend) => (
           <Link
